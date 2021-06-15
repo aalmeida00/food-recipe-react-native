@@ -18,7 +18,7 @@ import {
   dummyData,
 } from '../constants';
 
-import { CategoryCard } from '../components';
+import { CategoryCard, TrendingCard } from '../components';
 
 const Home = ({ navigation }) => {
   function renderHeader() {
@@ -154,6 +154,42 @@ const Home = ({ navigation }) => {
       </View>
     );
   }
+
+  function renderTendingSection() {
+    return (
+      <View
+        style={{
+          marginTop: s.padding,
+        }}
+      >
+        <Text
+          style={{
+            marginHorizontal: s.padding,
+            ...f.h2,
+          }}
+        >
+          Receitas do momento
+        </Text>
+        <FlatList
+          data={dummyData.trendingRecipes}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item, index }) => {
+            return (
+              <TrendingCard
+                containerStyle={{
+                  marginLeft: index == 0 ? s.padding : 0,
+                }}
+                recipeItem={item}
+                onPress={() => navigation.navigate('Recipe', { recipe: item })}
+              />
+            );
+          }}
+        ></FlatList>
+      </View>
+    );
+  }
   return (
     <SafeAreaView
       style={{
@@ -171,6 +207,7 @@ const Home = ({ navigation }) => {
             {renderHeader()}
             {renderSearchBar()}
             {renderSeeRecipeCard()}
+            {renderTendingSection()}
           </View>
         }
         renderItem={({ item }) => {
