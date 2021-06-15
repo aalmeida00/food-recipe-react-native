@@ -5,3 +5,8 @@
 ## Android Login Screen
 
 ![Login Screen by Andre Almeida](./__imagesDocumentation/loginScreen.png)
+
+## Android Home Screen
+
+![Home Screen Part 1 by Andre Almeida](./__imagesDocumentation/HomeScreen1.png)
+![Home Screen Part 2 by Andre Almeida](./__imagesDocumentation/HomeScreen2.png)
