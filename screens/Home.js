@@ -190,6 +190,38 @@ const Home = ({ navigation }) => {
       </View>
     );
   }
+
+  function renderCategoryHeader() {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 20,
+          marginHorizontal: s.padding,
+        }}
+      >
+        <Text
+          style={{
+            flex: 1,
+            ...f.h2,
+          }}
+        >
+          Categorias
+        </Text>
+        <TouchableOpacity>
+          <Text
+            style={{
+              color: c.gray,
+              ...f.body4,
+            }}
+          >
+            Ver todas
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <SafeAreaView
       style={{
@@ -208,6 +240,7 @@ const Home = ({ navigation }) => {
             {renderSearchBar()}
             {renderSeeRecipeCard()}
             {renderTendingSection()}
+            {renderCategoryHeader()}
           </View>
         }
         renderItem={({ item }) => {
