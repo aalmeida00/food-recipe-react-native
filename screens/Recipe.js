@@ -12,7 +12,7 @@ import { BlurView } from '@react-native-community/blur';
 
 import { FONTS as f, COLORS as c, SIZES as s, icons } from '../constants';
 
-const HEADER_HEIGHT = 350;
+const HEADER_HEIGHT = 450;
 
 const RecipeCreatorCardDetail = ({ selectedRecipe }) => {
   return (
@@ -139,7 +139,7 @@ const Recipe = ({ navigation, route }) => {
               {
                 translateY: ScrollY.interpolate({
                   inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                  outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75],
+                  outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.5],
                 }),
               },
               {
@@ -175,6 +175,126 @@ const Recipe = ({ navigation, route }) => {
     );
   }
 
+  function renderHeaderBar() {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 90,
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          paddingHorizontal: s.padding,
+          paddingBottom: 10,
+        }}
+      >
+        <Animated.View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: c.black,
+            opacity: ScrollY.interpolate({
+              inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 70],
+              outputRange: [0, 1],
+            }),
+          }}
+        />
+
+        <Animated.View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingBottom: 10,
+            opacity: ScrollY.interpolate({
+              inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 50],
+              outputRange: [0, 1],
+            }),
+            transform: [
+              {
+                translateY: ScrollY.interpolate({
+                  inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 50],
+                  outputRange: [50, 0],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
+          }}
+        >
+          <Text
+            style={{
+              color: c.lightGray,
+              ...f.body4,
+            }}
+          >
+            Receita por:
+          </Text>
+          <Text
+            style={{
+              color: c.white2,
+              ...f.h3,
+            }}
+          >
+            {selectedRecipe?.author?.name}
+          </Text>
+        </Animated.View>
+
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 35,
+            width: 35,
+            borderRadius: 18,
+            borderWidth: 1,
+            borderColor: c.lightGray,
+            backgroundColor: c.transparentBlack5,
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <Image
+            source={icons.back}
+            style={{
+              width: 15,
+              height: 15,
+              tintColor: c.lightGray,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 35,
+            width: 35,
+          }}
+        >
+          <Image
+            source={
+              selectedRecipe?.isBookmarked
+                ? icons.bookmarkFilled
+                : icons.bookmark
+            }
+            style={{
+              width: 30,
+              height: 30,
+              tintColor: c.darkGreen,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -250,6 +370,8 @@ const Recipe = ({ navigation, route }) => {
           </View>
         )}
       />
+
+      {renderHeaderBar()}
     </View>
   );
 };
