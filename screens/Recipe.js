@@ -13,7 +13,7 @@ import { BlurView } from '@react-native-community/blur';
 import { FONTS as f, COLORS as c, SIZES as s, icons } from '../constants';
 import { Viewers } from '../components';
 
-const HEADER_HEIGHT = 450;
+const HEADER_HEIGHT = 400;
 
 const RecipeCreatorCardDetail = ({ selectedRecipe }) => {
   return (
@@ -120,7 +120,7 @@ const Recipe = ({ navigation, route }) => {
     setSelectedRecipe(recipe);
   }, []);
 
-  function renderCeipeCardHeader() {
+  function renderRecipeCardHeader() {
     return (
       <View
         style={{
@@ -345,6 +345,36 @@ const Recipe = ({ navigation, route }) => {
     );
   }
 
+  function renderIngredientHeader() {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: 30,
+          marginTop: s.radius,
+          marginBottom: s.padding,
+        }}
+      >
+        <Text
+          style={{
+            flex: 1,
+            ...f.h3,
+          }}
+        >
+          Ingredientes
+        </Text>
+        <Text
+          style={{
+            color: c.lightGray2,
+            ...f.body4,
+          }}
+        >
+          {selectedRecipe?.ingredients.length} itens
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -365,8 +395,9 @@ const Recipe = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View>
-            {renderCeipeCardHeader()}
+            {renderRecipeCardHeader()}
             {renderRecipeInfo()}
+            {renderIngredientHeader()}
           </View>
         }
         scrollEventThrottle={16}
