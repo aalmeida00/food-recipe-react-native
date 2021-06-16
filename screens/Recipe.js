@@ -14,6 +14,102 @@ import { FONTS as f, COLORS as c, SIZES as s, icons } from '../constants';
 
 const HEADER_HEIGHT = 350;
 
+const RecipeCreatorCardDetail = ({ selectedRecipe }) => {
+  return (
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+      <View
+        style={{
+          height: 40,
+          width: 40,
+          marginLeft: 20,
+        }}
+      >
+        <Image
+          source={selectedRecipe?.author?.profilePic}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 20,
+        }}
+      >
+        <Text
+          style={{
+            color: c.lightGray2,
+            ...f.body4,
+          }}
+        >
+          Receita por:
+        </Text>
+        <Text
+          style={{
+            color: c.white2,
+            ...f.h3,
+          }}
+        >
+          {selectedRecipe?.author?.name}
+        </Text>
+      </View>
+      <TouchableOpacity
+        style={{
+          width: 30,
+          height: 30,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: 20,
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: c.lightGreen,
+        }}
+        onPress={() => console.log('Ver perfil')}
+      >
+        <Image
+          source={icons.rightArrow}
+          style={{
+            width: 25,
+            height: 25,
+            tintColor: c.lightGreen1,
+          }}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const RecipeCreatorCardInfo = ({ selectedRecipe }) => {
+  if (Platform.OS === 'ios') {
+    return (
+      <BlurView
+        style={{
+          flex: 1,
+          borderRadius: s.radius,
+        }}
+        blurType="dark"
+      >
+        <RecipeCreatorCardDetail selectedRecipe={selectedRecipe} />
+      </BlurView>
+    );
+  } else {
+    return (
+      <View
+        style={{
+          flex: 1,
+          borderRadius: s.radius,
+          backgroundColor: c.transparentBlack9,
+        }}
+      >
+        <RecipeCreatorCardDetail selectedRecipe={selectedRecipe} />
+      </View>
+    );
+  }
+};
+
 const Recipe = ({ navigation, route }) => {
   const [selectedRecipe, setSelectedRecipe] = React.useState(null);
   const ScrollY = useRef(new Animated.Value(0)).current;
@@ -55,6 +151,26 @@ const Recipe = ({ navigation, route }) => {
             ],
           }}
         />
+        <Animated.View
+          style={{
+            position: 'absolute',
+            bottom: 10,
+            left: 30,
+            right: 30,
+            height: 80,
+            transform: [
+              {
+                translateY: ScrollY.interpolate({
+                  inputRange: [0, 170, 250],
+                  outputRange: [0, 0, 100],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
+          }}
+        >
+          <RecipeCreatorCardInfo selectedRecipe={selectedRecipe} />
+        </Animated.View>
       </View>
     );
   }
