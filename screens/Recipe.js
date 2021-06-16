@@ -11,6 +11,7 @@ import {
 import { BlurView } from '@react-native-community/blur';
 
 import { FONTS as f, COLORS as c, SIZES as s, icons } from '../constants';
+import { Viewers } from '../components';
 
 const HEADER_HEIGHT = 450;
 
@@ -295,6 +296,55 @@ const Recipe = ({ navigation, route }) => {
       </View>
     );
   }
+
+  function renderRecipeInfo() {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 130,
+          width: s.width,
+          paddingHorizontal: 30,
+          paddingVertical: 20,
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            flex: 1.5,
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              ...f.h2,
+            }}
+          >
+            {selectedRecipe?.name}
+          </Text>
+          <Text
+            style={{
+              marginTop: 5,
+              color: c.lightGray2,
+              ...f.body4,
+            }}
+          >
+            {selectedRecipe?.duration} | {selectedRecipe?.serving} porções
+          </Text>
+        </View>
+
+        <View
+          style={{
+            justifyContent: 'center',
+            flex: 1,
+          }}
+        >
+          <Viewers viewersList={selectedRecipe?.viewers} />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -303,10 +353,22 @@ const Recipe = ({ navigation, route }) => {
       }}
     >
       <Animated.FlatList
+        ListFooterComponent={
+          <View
+            style={{
+              marginBottom: 100,
+            }}
+          />
+        }
         data={selectedRecipe?.ingredients}
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<View>{renderCeipeCardHeader()}</View>}
+        ListHeaderComponent={
+          <View>
+            {renderCeipeCardHeader()}
+            {renderRecipeInfo()}
+          </View>
+        }
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: ScrollY } } }],
