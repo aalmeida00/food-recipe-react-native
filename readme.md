@@ -10,3 +10,8 @@
 
 ![Home Screen Part 1 by Andre Almeida](./__imagesDocumentation/HomeScreen1.png)
 ![Home Screen Part 2 by Andre Almeida](./__imagesDocumentation/HomeScreen2.png)
+
+## Android Recipe Screen
+
+![Recipe Screen Part 1 by Andre Almeida](./__imagesDocumentation/RecipeScreen1.png)
+![Recipe Screen Part 2 by Andre Almeida](./__imagesDocumentation/RecipeScreen2.png)
